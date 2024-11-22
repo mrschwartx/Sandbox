@@ -1,0 +1,2 @@
+// Struct
+package main

@@ -1,0 +1,2 @@
+// Variables
+package main
