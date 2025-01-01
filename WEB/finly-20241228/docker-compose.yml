@@ -43,12 +43,6 @@ services:
     depends_on:
       mongodb:
         condition: service_healthy
-    # environment:
-    #   - APP_NAME=taskly-js
-    #   - APP_LEVEL=development
-    #   - APP_PORT=8080
-    #   - MONGODB_URI=mongodb://admin:admin@mongodb:27017/finly
-    #   - AUTH_SECRET=3e2d4f7d18e362c3a9f3b876a5f4e7d13894ab5e6a839c7fd292a3b5c1fdd87e
     ports:
       - 8080:8080
     volumes:
