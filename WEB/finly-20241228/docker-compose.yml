@@ -1,0 +1,61 @@
+services:
+  mongodb:
+    container_name: finly-mongodb
+    image: mongo:4.4
+    restart: always
+    environment:
+      - MONGO_INITDB_DATABASE=finly
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=securepassword123
+    ports:
+      - 27017:27017
+    volumes:
+      - ./tmp/scripts/mongo/init-db.js:/docker-entrypoint-initdb.d/init-db.js
+    networks:
+      - finly-network
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mongo-express:
+    container_name: finly-mongo-express
+    image: mongo-express:latest
+    restart: always
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    environment:
+      - ME_CONFIG_MONGODB_URL=mongodb://admin:securepassword123@mongodb:27017/
+      - ME_CONFIG_BASICAUTH=false
+    ports:
+      - 8081:8081
+    networks:
+      - finly-network
+  
+  app:
+    container_name: finly-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    # environment:
+    #   - APP_NAME=taskly-js
+    #   - APP_LEVEL=development
+    #   - APP_PORT=8080
+    #   - MONGODB_URI=mongodb://admin:admin@mongodb:27017/finly
+    #   - AUTH_SECRET=3e2d4f7d18e362c3a9f3b876a5f4e7d13894ab5e6a839c7fd292a3b5c1fdd87e
+    ports:
+      - 8080:8080
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - finly-network
+
+networks:
+  finly-network:
+    driver: bridge
