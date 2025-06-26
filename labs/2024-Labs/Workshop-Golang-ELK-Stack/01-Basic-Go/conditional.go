@@ -1,2 +1,0 @@
-// Conditionals
-package main
