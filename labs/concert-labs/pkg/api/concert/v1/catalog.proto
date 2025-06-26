@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+package example.com.concert.v1;
+
+option go_package = "example.com/pkg/api/concert/v1";
+
+import "google/api/annotations.proto";
+import "google/api/resource.proto";
+import "google/api/field_behavior.proto";
+import "google/api/client.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/field_mask.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+service CatalogService {
+  rpc ListConcerts(ListConcertParam) returns (ListConcertsResult) {
+    option (google.api.http) = {
+      get: "/api/concert/v1/concerts"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "List Concerts"
+    };
+  }
+
+  rpc GetConcert(GetConcertParam) returns (GetConcertResult) {
+    option (google.api.http) = {
+      get: "/api/concert/v1/concerts/{concert}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get Concert"
+    };
+    option (google.api.method_signature) = "concert";
+  }
+}
+
+message ListConcertParam {
+  uint64 page_size = 1;
+  string page_token = 2;
+  string order_by = 3;
+  google.protobuf.FieldMask list_mask = 4;
+}
+
+message ListConcertsResult {
+  repeated Concert concerts = 1;
+  string next_page_token = 2;
+}
+
+message GetConcertParam {
+  string concert = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      type: "concert.example.com/Concert"
+    }]; 
+}
+
+message GetConcertResult {
+  Concert concert = 1;
+}
+
+message Concert {
+  option (google.api.resource) = {
+    type: "concert.example.com/Concert"
+    pattern: "concerts/{concert}"
+    singular: "concert"
+    plural: "concerts"
+  };
+
+  string name = 1 [(google.api.field_behavior) = IDENTIFIER];
+  string concert_id = 2 [(google.api.field_behavior) = OUTPUT_ONLY];  
+  string display_name = 3;
+  string description = 4;
+  repeated Performer performers = 5;
+  google.protobuf.Timestamp announced_at = 6;
+  repeated Show shows = 7;
+  TicketPrice ticket_price = 8;
+}
+
+message Show {
+  option (google.api.resource) = {
+    type: "concert.example.com/ConcertShow"
+    pattern: "concerts/{concert}/shows/{show}"
+  };
+
+  string name = 1 [(google.api.field_behavior) = IDENTIFIER];
+  string show_id = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
+  string concert = 3 [(google.api.resource_reference) = {
+    type: "concert.example.com/Concert"
+  }];
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp end_time = 5;
+  string venue = 6;
+  int32 max_capacity = 7;
+  int32 available_tickets = 8;
+  TicketPrice ticket_price = 9;
+}
+
+message Performer {
+  string name = 1;
+  string image_url = 2;
+  repeated string genres = 3;
+}
+
+message TicketPrice {
+  double value = 1;
+  string currency = 2;
+}
