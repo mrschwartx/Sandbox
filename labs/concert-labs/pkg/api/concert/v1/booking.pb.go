@@ -552,7 +552,7 @@ type Booking struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Number        string                 `protobuf:"bytes,1,opt,name=number,proto3" json:"number,omitempty"`
 	Concert       string                 `protobuf:"bytes,2,opt,name=concert,proto3" json:"concert,omitempty"`
-	Show          string                 `protobuf:"bytes,3,opt,name=show,proto3" json:"show,omitempty"`
+	Batch         string                 `protobuf:"bytes,3,opt,name=batch,proto3" json:"batch,omitempty"`
 	Price         float64                `protobuf:"fixed64,4,opt,name=price,proto3" json:"price,omitempty"`
 	Currency      string                 `protobuf:"bytes,5,opt,name=currency,proto3" json:"currency,omitempty"`
 	Status        Status                 `protobuf:"varint,6,opt,name=status,proto3,enum=example.com.concert.v1.Status" json:"status,omitempty"`
@@ -611,9 +611,9 @@ func (x *Booking) GetConcert() string {
 	return ""
 }
 
-func (x *Booking) GetShow() string {
+func (x *Booking) GetBatch() string {
 	if x != nil {
-		return x.Show
+		return x.Batch
 	}
 	return ""
 }
@@ -932,13 +932,13 @@ const file_pkg_api_concert_v1_booking_proto_rawDesc = "" +
 	"\x12ExpireBookingParam\x12=\n" +
 	"\abooking\x18\x01 \x01(\tB#\xe0A\x02\xfaA\x1d\n" +
 	"\x1bconcert.example.com/BookingR\abooking\"\x15\n" +
-	"\x13ExpireBookingResult\"\x91\x06\n" +
+	"\x13ExpireBookingResult\"\x94\x06\n" +
 	"\aBooking\x12\x1b\n" +
 	"\x06number\x18\x01 \x01(\tB\x03\xe0A\x03R\x06number\x12:\n" +
 	"\aconcert\x18\x02 \x01(\tB \xfaA\x1d\n" +
-	"\x1bconcert.example.com/ConcertR\aconcert\x128\n" +
-	"\x04show\x18\x03 \x01(\tB$\xfaA!\n" +
-	"\x1fconcert.example.com/ConcertShowR\x04show\x12\x19\n" +
+	"\x1bconcert.example.com/ConcertR\aconcert\x12;\n" +
+	"\x05batch\x18\x03 \x01(\tB%\xfaA\"\n" +
+	" concert.example.com/ConcertBatchR\x05batch\x12\x19\n" +
 	"\x05price\x18\x04 \x01(\x01B\x03\xe0A\x03R\x05price\x12\x1f\n" +
 	"\bcurrency\x18\x05 \x01(\tB\x03\xe0A\x03R\bcurrency\x12;\n" +
 	"\x06status\x18\x06 \x01(\x0e2\x1e.example.com.concert.v1.StatusB\x03\xe0A\x03R\x06status\x12>\n" +

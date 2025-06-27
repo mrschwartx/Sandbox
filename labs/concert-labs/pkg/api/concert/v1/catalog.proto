@@ -72,27 +72,28 @@ message Concert {
   string description = 4;
   repeated Performer performers = 5;
   google.protobuf.Timestamp announced_at = 6;
-  repeated Show shows = 7;
+  repeated Batch batches = 7;
   TicketPrice ticket_price = 8;
 }
 
-message Show {
+message Batch {
   option (google.api.resource) = {
-    type: "concert.example.com/ConcertShow"
-    pattern: "concerts/{concert}/shows/{show}"
+    type: "concert.example.com/ConcertBatch"
+    pattern: "concerts/{concert}/batches/{batch}"
   };
 
   string name = 1 [(google.api.field_behavior) = IDENTIFIER];
-  string show_id = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
-  string concert = 3 [(google.api.resource_reference) = {
+  string batch_id = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
+  string display_name = 3;
+  string concert = 4 [(google.api.resource_reference) = {
     type: "concert.example.com/Concert"
   }];
-  google.protobuf.Timestamp start_time = 4;
-  google.protobuf.Timestamp end_time = 5;
-  string venue = 6;
-  int32 max_capacity = 7;
-  int32 available_tickets = 8;
-  TicketPrice ticket_price = 9;
+  google.protobuf.Timestamp start_time = 5;
+  google.protobuf.Timestamp end_time = 6;
+  string venue = 7;
+  int32 max_capacity = 8;
+  int32 available_tickets = 9;
+  TicketPrice ticket_price = 10;
 }
 
 message Performer {

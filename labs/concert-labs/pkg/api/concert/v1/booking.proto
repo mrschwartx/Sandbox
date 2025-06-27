@@ -137,8 +137,8 @@ message Booking {
   string concert = 2 [(google.api.resource_reference) = {
     type: "concert.example.com/Concert"
   }];
-  string show = 3 [(google.api.resource_reference) = {
-    type: "concert.example.com/ConcertShow"
+  string batch = 3 [(google.api.resource_reference) = {
+    type: "concert.example.com/ConcertBatch"
   }];
   double price = 4 [(google.api.field_behavior) = OUTPUT_ONLY];
   string currency = 5 [(google.api.field_behavior) = OUTPUT_ONLY];

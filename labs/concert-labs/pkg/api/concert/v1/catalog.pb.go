@@ -242,7 +242,7 @@ type Concert struct {
 	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
 	Performers    []*Performer           `protobuf:"bytes,5,rep,name=performers,proto3" json:"performers,omitempty"`
 	AnnouncedAt   *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=announced_at,json=announcedAt,proto3" json:"announced_at,omitempty"`
-	Shows         []*Show                `protobuf:"bytes,7,rep,name=shows,proto3" json:"shows,omitempty"`
+	Batches       []*Batch               `protobuf:"bytes,7,rep,name=batches,proto3" json:"batches,omitempty"`
 	TicketPrice   *TicketPrice           `protobuf:"bytes,8,opt,name=ticket_price,json=ticketPrice,proto3" json:"ticket_price,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -320,9 +320,9 @@ func (x *Concert) GetAnnouncedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *Concert) GetShows() []*Show {
+func (x *Concert) GetBatches() []*Batch {
 	if x != nil {
-		return x.Shows
+		return x.Batches
 	}
 	return nil
 }
@@ -334,35 +334,36 @@ func (x *Concert) GetTicketPrice() *TicketPrice {
 	return nil
 }
 
-type Show struct {
+type Batch struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	Name             string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	ShowId           string                 `protobuf:"bytes,2,opt,name=show_id,json=showId,proto3" json:"show_id,omitempty"`
-	Concert          string                 `protobuf:"bytes,3,opt,name=concert,proto3" json:"concert,omitempty"`
-	StartTime        *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
-	EndTime          *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
-	Venue            string                 `protobuf:"bytes,6,opt,name=venue,proto3" json:"venue,omitempty"`
-	MaxCapacity      int32                  `protobuf:"varint,7,opt,name=max_capacity,json=maxCapacity,proto3" json:"max_capacity,omitempty"`
-	AvailableTickets int32                  `protobuf:"varint,8,opt,name=available_tickets,json=availableTickets,proto3" json:"available_tickets,omitempty"`
-	TicketPrice      *TicketPrice           `protobuf:"bytes,9,opt,name=ticket_price,json=ticketPrice,proto3" json:"ticket_price,omitempty"`
+	BatchId          string                 `protobuf:"bytes,2,opt,name=batch_id,json=batchId,proto3" json:"batch_id,omitempty"`
+	DisplayName      string                 `protobuf:"bytes,3,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
+	Concert          string                 `protobuf:"bytes,4,opt,name=concert,proto3" json:"concert,omitempty"`
+	StartTime        *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	EndTime          *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	Venue            string                 `protobuf:"bytes,7,opt,name=venue,proto3" json:"venue,omitempty"`
+	MaxCapacity      int32                  `protobuf:"varint,8,opt,name=max_capacity,json=maxCapacity,proto3" json:"max_capacity,omitempty"`
+	AvailableTickets int32                  `protobuf:"varint,9,opt,name=available_tickets,json=availableTickets,proto3" json:"available_tickets,omitempty"`
+	TicketPrice      *TicketPrice           `protobuf:"bytes,10,opt,name=ticket_price,json=ticketPrice,proto3" json:"ticket_price,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
 
-func (x *Show) Reset() {
-	*x = Show{}
+func (x *Batch) Reset() {
+	*x = Batch{}
 	mi := &file_pkg_api_concert_v1_catalog_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Show) String() string {
+func (x *Batch) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Show) ProtoMessage() {}
+func (*Batch) ProtoMessage() {}
 
-func (x *Show) ProtoReflect() protoreflect.Message {
+func (x *Batch) ProtoReflect() protoreflect.Message {
 	mi := &file_pkg_api_concert_v1_catalog_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -374,68 +375,75 @@ func (x *Show) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Show.ProtoReflect.Descriptor instead.
-func (*Show) Descriptor() ([]byte, []int) {
+// Deprecated: Use Batch.ProtoReflect.Descriptor instead.
+func (*Batch) Descriptor() ([]byte, []int) {
 	return file_pkg_api_concert_v1_catalog_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *Show) GetName() string {
+func (x *Batch) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-func (x *Show) GetShowId() string {
+func (x *Batch) GetBatchId() string {
 	if x != nil {
-		return x.ShowId
+		return x.BatchId
 	}
 	return ""
 }
 
-func (x *Show) GetConcert() string {
+func (x *Batch) GetDisplayName() string {
+	if x != nil {
+		return x.DisplayName
+	}
+	return ""
+}
+
+func (x *Batch) GetConcert() string {
 	if x != nil {
 		return x.Concert
 	}
 	return ""
 }
 
-func (x *Show) GetStartTime() *timestamppb.Timestamp {
+func (x *Batch) GetStartTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.StartTime
 	}
 	return nil
 }
 
-func (x *Show) GetEndTime() *timestamppb.Timestamp {
+func (x *Batch) GetEndTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.EndTime
 	}
 	return nil
 }
 
-func (x *Show) GetVenue() string {
+func (x *Batch) GetVenue() string {
 	if x != nil {
 		return x.Venue
 	}
 	return ""
 }
 
-func (x *Show) GetMaxCapacity() int32 {
+func (x *Batch) GetMaxCapacity() int32 {
 	if x != nil {
 		return x.MaxCapacity
 	}
 	return 0
 }
 
-func (x *Show) GetAvailableTickets() int32 {
+func (x *Batch) GetAvailableTickets() int32 {
 	if x != nil {
 		return x.AvailableTickets
 	}
 	return 0
 }
 
-func (x *Show) GetTicketPrice() *TicketPrice {
+func (x *Batch) GetTicketPrice() *TicketPrice {
 	if x != nil {
 		return x.TicketPrice
 	}
@@ -572,7 +580,7 @@ const file_pkg_api_concert_v1_catalog_proto_rawDesc = "" +
 	"\aconcert\x18\x01 \x01(\tB#\xe0A\x02\xfaA\x1d\n" +
 	"\x1bconcert.example.com/ConcertR\aconcert\"M\n" +
 	"\x10GetConcertResult\x129\n" +
-	"\aconcert\x18\x01 \x01(\v2\x1f.example.com.concert.v1.ConcertR\aconcert\"\xd2\x03\n" +
+	"\aconcert\x18\x01 \x01(\v2\x1f.example.com.concert.v1.ConcertR\aconcert\"\xd7\x03\n" +
 	"\aConcert\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12\"\n" +
 	"\n" +
@@ -582,23 +590,25 @@ const file_pkg_api_concert_v1_catalog_proto_rawDesc = "" +
 	"\n" +
 	"performers\x18\x05 \x03(\v2!.example.com.concert.v1.PerformerR\n" +
 	"performers\x12=\n" +
-	"\fannounced_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\vannouncedAt\x122\n" +
-	"\x05shows\x18\a \x03(\v2\x1c.example.com.concert.v1.ShowR\x05shows\x12F\n" +
+	"\fannounced_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\vannouncedAt\x127\n" +
+	"\abatches\x18\a \x03(\v2\x1d.example.com.concert.v1.BatchR\abatches\x12F\n" +
 	"\fticket_price\x18\b \x01(\v2#.example.com.concert.v1.TicketPriceR\vticketPrice:G\xeaAD\n" +
-	"\x1bconcert.example.com/Concert\x12\x12concerts/{concert}*\bconcerts2\aconcert\"\xe0\x03\n" +
-	"\x04Show\x12\x17\n" +
-	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12\x1c\n" +
-	"\ashow_id\x18\x02 \x01(\tB\x03\xe0A\x03R\x06showId\x12:\n" +
-	"\aconcert\x18\x03 \x01(\tB \xfaA\x1d\n" +
+	"\x1bconcert.example.com/Concert\x12\x12concerts/{concert}*\bconcerts2\aconcert\"\x8a\x04\n" +
+	"\x05Batch\x12\x17\n" +
+	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x12\x1e\n" +
+	"\bbatch_id\x18\x02 \x01(\tB\x03\xe0A\x03R\abatchId\x12!\n" +
+	"\fdisplay_name\x18\x03 \x01(\tR\vdisplayName\x12:\n" +
+	"\aconcert\x18\x04 \x01(\tB \xfaA\x1d\n" +
 	"\x1bconcert.example.com/ConcertR\aconcert\x129\n" +
 	"\n" +
-	"start_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
-	"\bend_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x12\x14\n" +
-	"\x05venue\x18\x06 \x01(\tR\x05venue\x12!\n" +
-	"\fmax_capacity\x18\a \x01(\x05R\vmaxCapacity\x12+\n" +
-	"\x11available_tickets\x18\b \x01(\x05R\x10availableTickets\x12F\n" +
-	"\fticket_price\x18\t \x01(\v2#.example.com.concert.v1.TicketPriceR\vticketPrice:E\xeaAB\n" +
-	"\x1fconcert.example.com/ConcertShow\x12\x1fconcerts/{concert}/shows/{show}\"T\n" +
+	"start_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
+	"\bend_time\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x12\x14\n" +
+	"\x05venue\x18\a \x01(\tR\x05venue\x12!\n" +
+	"\fmax_capacity\x18\b \x01(\x05R\vmaxCapacity\x12+\n" +
+	"\x11available_tickets\x18\t \x01(\x05R\x10availableTickets\x12F\n" +
+	"\fticket_price\x18\n" +
+	" \x01(\v2#.example.com.concert.v1.TicketPriceR\vticketPrice:I\xeaAF\n" +
+	" concert.example.com/ConcertBatch\x12\"concerts/{concert}/batches/{batch}\"T\n" +
 	"\tPerformer\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1b\n" +
 	"\timage_url\x18\x02 \x01(\tR\bimageUrl\x12\x16\n" +
@@ -630,7 +640,7 @@ var file_pkg_api_concert_v1_catalog_proto_goTypes = []any{
 	(*GetConcertParam)(nil),       // 2: example.com.concert.v1.GetConcertParam
 	(*GetConcertResult)(nil),      // 3: example.com.concert.v1.GetConcertResult
 	(*Concert)(nil),               // 4: example.com.concert.v1.Concert
-	(*Show)(nil),                  // 5: example.com.concert.v1.Show
+	(*Batch)(nil),                 // 5: example.com.concert.v1.Batch
 	(*Performer)(nil),             // 6: example.com.concert.v1.Performer
 	(*TicketPrice)(nil),           // 7: example.com.concert.v1.TicketPrice
 	(*fieldmaskpb.FieldMask)(nil), // 8: google.protobuf.FieldMask
@@ -642,11 +652,11 @@ var file_pkg_api_concert_v1_catalog_proto_depIdxs = []int32{
 	4,  // 2: example.com.concert.v1.GetConcertResult.concert:type_name -> example.com.concert.v1.Concert
 	6,  // 3: example.com.concert.v1.Concert.performers:type_name -> example.com.concert.v1.Performer
 	9,  // 4: example.com.concert.v1.Concert.announced_at:type_name -> google.protobuf.Timestamp
-	5,  // 5: example.com.concert.v1.Concert.shows:type_name -> example.com.concert.v1.Show
+	5,  // 5: example.com.concert.v1.Concert.batches:type_name -> example.com.concert.v1.Batch
 	7,  // 6: example.com.concert.v1.Concert.ticket_price:type_name -> example.com.concert.v1.TicketPrice
-	9,  // 7: example.com.concert.v1.Show.start_time:type_name -> google.protobuf.Timestamp
-	9,  // 8: example.com.concert.v1.Show.end_time:type_name -> google.protobuf.Timestamp
-	7,  // 9: example.com.concert.v1.Show.ticket_price:type_name -> example.com.concert.v1.TicketPrice
+	9,  // 7: example.com.concert.v1.Batch.start_time:type_name -> google.protobuf.Timestamp
+	9,  // 8: example.com.concert.v1.Batch.end_time:type_name -> google.protobuf.Timestamp
+	7,  // 9: example.com.concert.v1.Batch.ticket_price:type_name -> example.com.concert.v1.TicketPrice
 	0,  // 10: example.com.concert.v1.CatalogService.ListConcerts:input_type -> example.com.concert.v1.ListConcertParam
 	2,  // 11: example.com.concert.v1.CatalogService.GetConcert:input_type -> example.com.concert.v1.GetConcertParam
 	1,  // 12: example.com.concert.v1.CatalogService.ListConcerts:output_type -> example.com.concert.v1.ListConcertsResult

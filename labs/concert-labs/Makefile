@@ -39,6 +39,12 @@ dev.gen:
 dev.tidy:
 	go mod tidy
 
+dev.seed:
+	go run cmd/main.go server seed --config configs/config.yml
+
+dev.run:
+	go run cmd/main.go server seed --config configs/config.yml --migration course/migrations
+
 ##########################################################################################
 ### DOCKER
 ##########################################################################################

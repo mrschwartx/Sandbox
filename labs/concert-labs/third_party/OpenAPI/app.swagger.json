@@ -384,6 +384,46 @@
         }
       }
     },
+    "v1Batch": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "batchId": {
+          "type": "string",
+          "readOnly": true
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "concert": {
+          "type": "string"
+        },
+        "startTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "venue": {
+          "type": "string"
+        },
+        "maxCapacity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "availableTickets": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "ticketPrice": {
+          "$ref": "#/definitions/v1TicketPrice"
+        }
+      }
+    },
     "v1Booking": {
       "type": "object",
       "properties": {
@@ -394,7 +434,7 @@
         "concert": {
           "type": "string"
         },
-        "show": {
+        "batch": {
           "type": "string"
         },
         "price": {
@@ -470,11 +510,11 @@
           "type": "string",
           "format": "date-time"
         },
-        "shows": {
+        "batches": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/v1Show"
+            "$ref": "#/definitions/v1Batch"
           }
         },
         "ticketPrice": {
@@ -590,43 +630,6 @@
     },
     "v1ReserveBookingResult": {
       "type": "object"
-    },
-    "v1Show": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "showId": {
-          "type": "string",
-          "readOnly": true
-        },
-        "concert": {
-          "type": "string"
-        },
-        "startTime": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "endTime": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "venue": {
-          "type": "string"
-        },
-        "maxCapacity": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "availableTickets": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "ticketPrice": {
-          "$ref": "#/definitions/v1TicketPrice"
-        }
-      }
     },
     "v1TicketPrice": {
       "type": "object",
