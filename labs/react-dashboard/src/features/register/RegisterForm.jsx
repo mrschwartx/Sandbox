@@ -11,27 +11,31 @@ import {
   TextField,
   useMediaQuery,
 } from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { toast } from "react-toastify";
 
+import RegisterApi from "./RegisterApi";
 import Logo from "../../assets/images/logo.png";
-import AuthService from "../../services/AuthService";
 import validateInput from "../../utils/validateInput";
 
 const INITIAL_VALUE = {
+  name: "",
   email: "",
   password: "",
   showPassword: false,
 };
 
 const INITIAL_ERROR = {
+  name: "",
   email: "",
   password: "",
 };
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const navigate = useNavigate();
 
   const tablet = useMediaQuery("(max-width: 920px)");
@@ -81,11 +85,18 @@ const LoginForm = () => {
     setAllowSubmit(isFormFilled);
   }, [values]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = { ...values };
     delete formData.showPassword;
-    const { email, password } = formData;
+    const { name, email, password } = formData;
+
+    if (name === "") {
+      setError({
+        ...error,
+        name: "Name is required",
+      });
+    }
 
     if (email === "") {
       setError({
@@ -104,19 +115,13 @@ const LoginForm = () => {
     if (valid && allowSubmit) {
       setLoading(true);
 
-      setTimeout(() => {
-        setLoading(false);
-
-        console.log("Login berhasil!");
-        console.log("Form data:", values);
-
-        const fakeToken = "FAKE_TOKEN_123";
-
-        AuthService.storeToken(fakeToken);
-
-        setError(INITIAL_ERROR);
+      const response = await RegisterApi(formData);
+      setLoading(false);
+      if (response.success) {
         navigate("/");
-      }, 1000);
+      } else {
+        toast.error(response.error || "Registration failed.");
+      }
     }
   };
 
@@ -144,6 +149,26 @@ const LoginForm = () => {
         spacing={3}
         sx={{ width: tablet ? "75%" : "100%", alignItems: "center" }}
       >
+        <TextField
+          label="Name"
+          name="name"
+          placeholder="Your full name"
+          error={error.name !== ""}
+          helperText={error.name}
+          value={values.name}
+          onChange={handleChange}
+          variant="outlined"
+          fullWidth
+          required
+          autoFocus
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <PersonIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
         <TextField
           label="Email"
           name="email"
@@ -211,11 +236,11 @@ const LoginForm = () => {
             loading ? <CircularProgress size={24} thickness={5} /> : undefined
           }
         >
-          Login
+          Register
         </Button>
       </Stack>
     </Box>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

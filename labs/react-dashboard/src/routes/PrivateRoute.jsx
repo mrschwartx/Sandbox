@@ -2,9 +2,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Navigate, Outlet, useLocation } from "react-router";
 import { Helmet } from "react-helmet";
-
-import { getHeading } from "../utils/getHeading";
 import AuthService from "../services/AuthService";
+import { getHeading } from "../utils/getHeading";
 
 const TITLE = "Dashboard";
 
@@ -15,7 +14,11 @@ const PrivateRoute = () => {
 
   useEffect(() => {
     const heading = getHeading(pathname);
-    setTitle(heading || TITLE);
+    if (heading === "") {
+      setTitle(TITLE);
+    } else {
+      setTitle(heading);
+    }
   }, [pathname]);
 
   if (!AuthService.isAuthorized()) {

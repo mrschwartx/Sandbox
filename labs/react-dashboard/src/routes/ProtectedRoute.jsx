@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Navigate, Outlet, useLocation } from "react-router";
 import { Helmet } from "react-helmet";
-
 import AuthService from "../services/AuthService";
 import { getHeading } from "../utils/getHeading";
 
@@ -14,8 +13,12 @@ const ProtectedRoute = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const heading = getHeading(pathname)
-    setTitle(heading || TITLE);
+    const heading = getHeading(pathname);
+    if (heading === "") {
+      setTitle(TITLE);
+    } else {
+      setTitle(heading);
+    }
   }, [pathname]);
 
   if (AuthService.isAuthorized()) {
@@ -26,7 +29,7 @@ const ProtectedRoute = () => {
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>{ title }</title>
+        <title>{title}</title>
       </Helmet>
       <Outlet />
     </>
