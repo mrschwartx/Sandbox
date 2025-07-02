@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import {
   Box,
   Button,
@@ -16,11 +17,10 @@ import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { toast } from "react-toastify";
 
-import RegisterApi from "./RegisterApi";
-import Logo from "../../assets/images/logo.png";
+import Logo from "../../assets/images/icons/react.svg";
 import validateInput from "../../utils/validateInput";
+import RegisterApi from "./RegisterApi";
 
 const INITIAL_VALUE = {
   name: "",
@@ -116,9 +116,11 @@ const RegisterForm = () => {
       setLoading(true);
 
       const response = await RegisterApi(formData);
+      
       setLoading(false);
+
       if (response.success) {
-        navigate("/");
+        navigate("/login");
       } else {
         toast.error(response.error || "Registration failed.");
       }
@@ -139,8 +141,9 @@ const RegisterForm = () => {
       <img
         onClick={() => navigate("/")}
         style={{
-          width: 120,
+          width: 80,
           cursor: "pointer",
+          marginBottom: 16,
         }}
         src={Logo}
         alt="logo-vaksin-id"

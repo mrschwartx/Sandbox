@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import {
   Box,
   Button,
@@ -16,9 +17,10 @@ import LockIcon from "@mui/icons-material/Lock";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-import Logo from "../../assets/images/logo.png";
-import AuthService from "../../services/AuthService";
+import Logo from "../../assets/images/icons/react.svg";
 import validateInput from "../../utils/validateInput";
+import AuthService from "../../services/AuthService";
+import LoginApi from "./LoginApi";
 
 const INITIAL_VALUE = {
   email: "",
@@ -81,7 +83,7 @@ const LoginForm = () => {
     setAllowSubmit(isFormFilled);
   }, [values]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = { ...values };
     delete formData.showPassword;
@@ -104,19 +106,16 @@ const LoginForm = () => {
     if (valid && allowSubmit) {
       setLoading(true);
 
-      setTimeout(() => {
-        setLoading(false);
+      const response = await LoginApi(formData);
 
-        console.log("Login berhasil!");
-        console.log("Form data:", values);
+      setLoading(false);
 
-        const fakeToken = "FAKE_TOKEN_123";
-
-        AuthService.storeToken(fakeToken);
-
-        setError(INITIAL_ERROR);
+     if (response.success) {
+        AuthService.storeToken(response.data?.token);
         navigate("/");
-      }, 1000);
+      } else {
+        toast.error(response.error || "Registration failed.");
+      }
     }
   };
 
@@ -134,11 +133,12 @@ const LoginForm = () => {
       <img
         onClick={() => navigate("/")}
         style={{
-          width: 120,
+          width: 80,
           cursor: "pointer",
+          marginBottom: 16,
         }}
         src={Logo}
-        alt="logo-vaksin-id"
+        alt="logo"
       />
       <Stack
         spacing={3}
