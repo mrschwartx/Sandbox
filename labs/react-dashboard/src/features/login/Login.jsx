@@ -1,5 +1,5 @@
 import { Stack, Typography, useMediaQuery } from "@mui/material";
-import BannerLogin from "../../assets/images/illustrations/login-illustration.png";
+import BannerLogin from "../../assets/images/icons/vite.svg";
 import LoginForm from "./LoginForm";
 
 const Login = () => {
